@@ -2,21 +2,6 @@
 
 Portable fish shell configuration for Fedora, Arch, and Ubuntu.
 
-## Structure
-
-```
-config.fish              # oh-my-posh atomicBit, bun, conda, clx
-conf.d/mybash.fish       # christitustech/mybash port
-conf.d/nisko.fish        # NiskoDT/PowerShell port
-functions/cleanram.fish  # sync + drop_caches
-completions/bun.fish     # bun completions
-.gitignore               # fish_variables + backups
-```
-
-See [`config.fish`](config.fish) for the startup order, [`conf.d/mybash.fish`](conf.d/mybash.fish) and [`conf.d/nisko.fish`](conf.d/nisko.fish) for the ported aliases.
-
-Details for each file live in [`STRUCTURE.md`](STRUCTURE.md).
-
 ## Requirements
 
 - fish shell 3.6 or newer
