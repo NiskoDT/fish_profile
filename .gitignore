@@ -1,0 +1,9 @@
+# Machine-specific state (differs per host)
+fish_variables
+
+# Local backups (not portable)
+config.fish.bak*
+
+# Python cache directories
+__pycache__/
+*.pyc
