@@ -4,29 +4,18 @@ Portable fish shell configuration for Fedora, Arch, and Ubuntu.
 
 ## Structure
 
-config.fish
-conf.d/
-  mybash.fish      # christitustech/mybash port
-  nisko.fish       # NiskoDT/PowerShell port
-functions/
-  cleanram.fish
-completions/
-  bun.fish
-.gitignore
+```
+config.fish              # oh-my-posh atomicBit, bun, conda, clx
+conf.d/mybash.fish       # christitustech/mybash port
+conf.d/nisko.fish        # NiskoDT/PowerShell port
+functions/cleanram.fish  # sync + drop_caches
+completions/bun.fish     # bun completions
+.gitignore               # fish_variables + backups
+```
 
-## File Descriptions
+See [`config.fish`](config.fish) for the startup order, [`conf.d/mybash.fish`](conf.d/mybash.fish) and [`conf.d/nisko.fish`](conf.d/nisko.fish) for the ported aliases.
 
-config.fish loads oh-my-posh with the atomicBit theme, initializes bun completions, sets up conda, and configures clx for colorized ls output.
-
-conf.d/mybash.fish ports aliases and functions from christitustech/mybash including git shortcuts, docker helpers, and system utilities.
-
-conf.d/nisko.fish ports PowerShell-inspired aliases and functions from NiskoDT/PowerShell including navigation shortcuts and package manager wrappers.
-
-functions/cleanram.fish drops caches and compacts memory using sync and sysctl calls.
-
-completions/bun.fish provides tab completion for the bun JavaScript runtime.
-
-.gitignore excludes fish_variables, config.fish.bak*, __pycache__/, and *.pyc from version control.
+Details for each file live in [`STRUCTURE.md`](STRUCTURE.md).
 
 ## Requirements
 
@@ -50,7 +39,3 @@ After cloning, restart your shell or run `source ~/.config/fish/config.fish` to 
 
 - christitustech/mybash (conf.d/mybash.fish)
 - NiskoDT/PowerShell (conf.d/nisko.fish)
-
-## License
-
-MIT
