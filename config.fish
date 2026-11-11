@@ -1,8 +1,37 @@
+# Fix XDG_RUNTIME_DIR for tmux / non-login shells (podman-tui, podman socket)
+if test -z "$XDG_RUNTIME_DIR"
+    set -gx XDG_RUNTIME_DIR /run/user/(id -u)
+end
+
 # User specific paths (migrated from .bashrc)
 fish_add_path ~/.local/bin ~/bin ~/.opencode/bin
 
+# PowerShell-style startup status messages
+# Keep the network probe capped so SSH logins cannot hang on startup.
 if status is-interactive
-# Commands to run in interactive sessions can go here
+    set_color green
+    echo "Loading fish profile..."
+    set_color normal
+    if ping -c1 -W2 google.com >/dev/null 2>&1
+        set_color green
+        echo "Internet connection established!"
+        set_color normal
+    else
+        set_color red
+        echo "No internet connection. Commands and terminal output may be limited."
+        set_color normal
+    end
+    for t in rg bat fzf fd jq fastfetch zoxide oh-my-posh
+        if type -q $t
+            set_color green
+            echo "$t is installed."
+            set_color normal
+        else
+            set_color red
+            echo "$t not found."
+            set_color normal
+        end
+    end
 end
 
 # oh-my-posh init line for fish
@@ -39,15 +68,30 @@ if status is-interactive
     fastfetch
 end
 
+# Privilege status after fastfetch, separated by one blank line on each side.
+if status is-interactive
+    echo
+    if test (id -u) -eq 0
+        set_color red
+        echo "WARNING: Running with ELEVATED privileges."
+        set_color normal
+    else
+        set_color green
+        echo "Running with normal user privileges."
+        set_color normal
+    end
+    echo
+end
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-if test -f /home/abdul/miniforge3/bin/conda
-    eval /home/abdul/miniforge3/bin/conda "shell.fish" "hook" $argv | source
+if test -f $HOME/miniforge3/bin/conda
+    eval $HOME/miniforge3/bin/conda "shell.fish" "hook" $argv | source
 else
-    if test -f "/home/abdul/miniforge3/etc/fish/conf.d/conda.fish"
-        . "/home/abdul/miniforge3/etc/fish/conf.d/conda.fish"
+    if test -f "$HOME/miniforge3/etc/fish/conf.d/conda.fish"
+        . "$HOME/miniforge3/etc/fish/conf.d/conda.fish"
     else
-        set -x PATH "/home/abdul/miniforge3/bin" $PATH
+        set -x PATH "$HOME/miniforge3/bin" $PATH
     end
 end
 # <<< conda initialize <<<

@@ -1,5 +1,5 @@
 # NiskoDT/PowerShell → fish — curated extras not already in mybash
-# ponytail: only portable, high-signal utils. Windows/Scoop/Catppuccin/carapace skipped.
+# ponytail: only portable, high-signal utils. 
 # https://github.com/NiskoDT/PowerShell
 
 # ── env ──────────────────────────────────────────────────
@@ -9,17 +9,24 @@ if type -q rg
 end
 
 # ── smart overrides (only if tool exists, else keep stock) ──
+# grep to rg (ripgrep)
 if type -q rg
-    # grep → ripgrep
+    # grep → ripgrep, but real grep when grep-only flags are used
     function grep --wraps rg --description "grep → rg (or stock grep)"
-        rg $argv
+        if string match -qr -- '^-[a-zA-Z]*E' $argv
+            command grep $argv
+        else
+            rg $argv
+        end
     end
 end
+# cat to bat
 if type -q bat
     function cat --wraps bat --description "cat → bat"
         bat $argv
     end
 end
+# find to fd
 if type -q fd
     function find --wraps fd --description "find → fd"
         fd $argv
